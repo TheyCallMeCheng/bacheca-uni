@@ -164,31 +164,44 @@ export default function Home() {
     };
 
     return (
-        <main className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 scrollbar-custom">
-            <header className="sticky top-0 backdrop-blur-md bg-white/70 dark:bg-gray-900/70 shadow-sm z-40">
-                <h1 className="text-4xl font-bold text-center py-6 font-sans italic tracking-tight text-gray-800 dark:text-gray-100">
-                    LA BACHECA
-                </h1>
-            </header>
+        <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900">
+            <main className="flex-1 pb-16">
+                <div className="container mx-auto max-w-4xl">
+                    <Feed posts={posts} />
+                </div>
 
-            <button
-                className="fixed bottom-6 right-6 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full p-4 shadow-lg transition-all duration-200 ease-in-out hover:scale-110 z-50"
-                onClick={() => setIsCreatePostOpen(true)}
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                </svg>
-            </button>
+                <CreatePost
+                    isOpen={isCreatePostOpen}
+                    onClose={() => setIsCreatePostOpen(false)}
+                    onSubmit={handleCreatePost}
+                />
+            </main>
 
-            <div className="container mx-auto px-4 py-8 max-w-4xl">
-                <Feed posts={posts} />
-            </div>
-
-            <CreatePost
-                isOpen={isCreatePostOpen}
-                onClose={() => setIsCreatePostOpen(false)}
-                onSubmit={handleCreatePost}
-            />
-        </main>
+            <nav className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 shadow-lg flex justify-around items-center p-4 h-16">
+                <button
+                    onClick={() => window.location.href = '/'}
+                    className="flex flex-col items-center"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                    <span className="text-sm">Home</span>
+                </button>
+                <button
+                    onClick={() => setIsCreatePostOpen(true)}
+                    className="flex items-center justify-center text-white bg-indigo-500 hover:bg-indigo-600 rounded-full w-16 h-16 -mt-8 shadow-lg relative"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                    </svg>
+                </button>
+                <button className="flex flex-col items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-3.31 0-10 1.67-10 5v2h20v-2c0-3.33-6.69-5-10-5z" />
+                    </svg>
+                    <span className="text-sm">Account</span>
+                </button>
+            </nav>
+        </div>
     );
 }

@@ -19,7 +19,7 @@ type FeedProps = {
 
 export default function Feed({ posts }: FeedProps) {
     return (
-        <div className="max-w-md mx-auto h-screen overflow-y-auto snap-y snap-mandatory">
+        <div className="max-w-md mx-auto overflow-y-auto snap-y snap-mandatory">
             {posts.map((post) => (
                 <PostCard
                     key={post.id}
