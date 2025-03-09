@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import PostCard from './PostCard';
-import CommentSection from './CommentSection';
+import { useRouter } from 'next/navigation';
 
 type Post = {
     id: string;
@@ -27,14 +27,10 @@ type FeedProps = {
 };
 
 export default function Feed({ posts, onCreatePost }: FeedProps) {
-    const [activePostId, setActivePostId] = useState<string | null>(null);
+    const router = useRouter();
 
     const handleOpenComments = (postId: string) => {
-        setActivePostId(postId);
-    };
-
-    const handleCloseComments = () => {
-        setActivePostId(null);
+        router.push(`/post/${postId}`);
     };
 
     return (
@@ -59,15 +55,6 @@ export default function Feed({ posts, onCreatePost }: FeedProps) {
                     />
                 </div>
             ))}
-
-            {activePostId && (
-                <CommentSection
-                    postId={activePostId}
-                    isOpen={!!activePostId}
-                    onClose={handleCloseComments}
-                    onCreatePost={onCreatePost}
-                />
-            )}
         </div>
     );
 } 
