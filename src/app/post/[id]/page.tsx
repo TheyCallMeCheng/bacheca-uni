@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
-import BottomMenu from '@/components/BottomMenu';
 import { use } from 'react';
 
 type Post = {
@@ -283,20 +282,20 @@ export default function PostPage({ params }: { params: Promise<{ id: string }> }
             )}
 
             {/* Comment input */}
-            <div className="border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 sticky bottom-0 z-20 py-3">
-                <div className="max-w-md mx-auto px-4">
+            <div className="border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 sticky bottom-0 z-20 ">
+                <div className="max-w-md mx-auto">
                     <div className="flex">
                         <input
                             type="text"
                             value={newComment}
                             onChange={(e) => setNewComment(e.target.value)}
                             placeholder={replyTo ? "Write a reply..." : "Write a comment..."}
-                            className="flex-1 border border-gray-300 dark:border-gray-600 rounded-l-lg px-4 py-2 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                            className="flex-1  px-4 py-2 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none"
                         />
                         <button
                             onClick={handleSubmitComment}
                             disabled={!newComment.trim()}
-                            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-r-lg disabled:opacity-50"
+                            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2  disabled:opacity-50"
                         >
                             Post
                         </button>
