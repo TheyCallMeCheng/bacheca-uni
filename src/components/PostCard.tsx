@@ -1,4 +1,5 @@
 type PostCardProps = {
+    id: string;
     title: string;
     content: string;
     created_at: string;
@@ -7,9 +8,20 @@ type PostCardProps = {
         type: 'image' | 'video';
     };
     tags: string[];
+    commentCount?: number;
+    onOpenComments: (postId: string) => void;
 };
 
-export default function PostCard({ title, content, created_at, media, tags }: PostCardProps) {
+export default function PostCard({
+    id,
+    title,
+    content,
+    created_at,
+    media,
+    tags,
+    commentCount = 0,
+    onOpenComments
+}: PostCardProps) {
     return (
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 mb-4 snap-start">
             <div className="flex justify-between items-center mb-2">
@@ -60,6 +72,19 @@ export default function PostCard({ title, content, created_at, media, tags }: Po
                         {tag}
                     </span>
                 ))}
+            </div>
+
+            {/* Post actions */}
+            <div className="flex items-center mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
+                <button
+                    onClick={() => onOpenComments(id)}
+                    className="flex items-center text-gray-600 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                    </svg>
+                    <span>{commentCount > 0 ? `${commentCount} comments` : 'Comment'}</span>
+                </button>
             </div>
         </div>
     );

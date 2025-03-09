@@ -169,7 +169,10 @@ export default function Home() {
         <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900">
             <main className="flex-1 pb-16">
                 <div className="container mx-auto max-w-4xl">
-                    <Feed posts={posts} />
+                    <Feed
+                        posts={posts}
+                        onCreatePost={handleCreatePost}
+                    />
                 </div>
             </main>
             <BottomMenu onCreatePost={handleCreatePost} />

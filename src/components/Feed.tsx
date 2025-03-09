@@ -1,6 +1,8 @@
 'use client';
 
+import { useState } from 'react';
 import PostCard from './PostCard';
+import CommentSection from './CommentSection';
 
 type Post = {
     id: string;
@@ -11,28 +13,61 @@ type Post = {
     media_url?: string;
     media_type?: 'image' | 'video';
     tags: string[];
+    comment_count?: number;
 };
 
 type FeedProps = {
     posts: Post[];
+    onCreatePost: (post: {
+        title: string;
+        content: string;
+        media?: File;
+        tags: string[];
+    }) => Promise<void>;
 };
 
-export default function Feed({ posts }: FeedProps) {
+export default function Feed({ posts, onCreatePost }: FeedProps) {
+    const [activePostId, setActivePostId] = useState<string | null>(null);
+
+    const handleOpenComments = (postId: string) => {
+        setActivePostId(postId);
+    };
+
+    const handleCloseComments = () => {
+        setActivePostId(null);
+    };
+
     return (
-        <div className="max-w-md mx-auto overflow-y-auto snap-y snap-mandatory">
-            {posts.map((post) => (
-                <PostCard
+        <div className="max-w-md mx-auto bg-white dark:bg-gray-900">
+            {posts.map((post, index) => (
+                <div
                     key={post.id}
-                    title={post.title}
-                    content={post.content}
-                    created_at={post.created_at}
-                    media={post.media_url ? {
-                        url: post.media_url,
-                        type: post.media_type || 'image'
-                    } : undefined}
-                    tags={post.tags}
-                />
+                    className={`${index !== posts.length - 1 ? 'mb-4' : 'mb-6'}`}
+                >
+                    <PostCard
+                        id={post.id}
+                        title={post.title}
+                        content={post.content}
+                        created_at={post.created_at}
+                        media={post.media_url ? {
+                            url: post.media_url,
+                            type: post.media_type || 'image'
+                        } : undefined}
+                        tags={post.tags}
+                        commentCount={post.comment_count || 0}
+                        onOpenComments={handleOpenComments}
+                    />
+                </div>
             ))}
+
+            {activePostId && (
+                <CommentSection
+                    postId={activePostId}
+                    isOpen={!!activePostId}
+                    onClose={handleCloseComments}
+                    onCreatePost={onCreatePost}
+                />
+            )}
         </div>
     );
 } 
